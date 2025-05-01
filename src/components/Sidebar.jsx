@@ -17,12 +17,17 @@ export default function Sidebar() {
             </li>
             <li>
               <Link to="/instructor/courses" className="hover:underline">
-                Manage Courses
+                View & Manage Your Courses
+              </Link>
+            </li>
+            <li>
+              <Link to="/instructor/add-course" className="hover:underline">
+                Add New Courses 
               </Link>
             </li>
             <li>
               <Link to="/instructor/sessions" className="hover:underline">
-                Add Session
+                Add Sessions to Your Courses 
               </Link>
             </li>
           </>

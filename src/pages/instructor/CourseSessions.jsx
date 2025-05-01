@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import SessionCard from '../../components/SessionCard';
+import SessionForm from '../../components/SessionForm';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function CourseSessions() {
   const { id } = useParams(); // courseId
   const [course, setCourse] = useState(null);
   const [sessions, setSessions] = useState([]);
+  const [editingSession, setEditingSession] = useState(null);
+  const navigate = useNavigate();
 
   const token = JSON.parse(localStorage.getItem('learnsphere-user'))?.token;
 
@@ -23,7 +28,49 @@ export default function CourseSessions() {
       setCourse(courseRes.data);
       setSessions(sessionRes.data);
     } catch {
-      console.log('Failed to load sessions');
+      toast.error('Failed to load course/sessions');
+    }
+  };
+
+  const handleFormSubmit = async (data, reset, editor) => {
+    try {
+      if (editingSession) {
+        await axios.put(`http://localhost:5000/api/sessions/${editingSession.id}`, data, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        toast.success('Session updated');
+        setEditingSession(null);
+      } else {
+        await axios.post('http://localhost:5000/api/sessions', data, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        toast.success('Session created');
+      }
+
+      reset();
+      editor.commands.clearContent();
+      fetchData();
+    } catch {
+      toast.error('Action failed');
+    }
+  };
+
+  const handleEdit = (sessionId) => {
+    const session = sessions.find((s) => s.id === sessionId);
+    setEditingSession(session);
+  };
+
+  const handleDelete = async (sessionId) => {
+    if (!window.confirm('Are you sure you want to delete this session?')) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/sessions/${sessionId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success('Session deleted');
+      fetchData();
+    } catch {
+      toast.error('Failed to delete session');
     }
   };
 
@@ -37,8 +84,21 @@ export default function CourseSessions() {
         Sessions for: {course?.title || 'Loading...'}
       </h2>
 
+      {editingSession ?
+        <SessionForm
+          onSubmit={handleFormSubmit}
+          courseOptions={course ? [course] : []}
+          editingSession={editingSession}
+          setEditingSession={setEditingSession}
+        /> : ''
+      }
+
       {sessions.length === 0 ? (
-        <p>No sessions added yet.</p>
+        <div>
+          <p>No sessions added yet.</p>
+          <button className="bg-green-600 text-white px-4 py-2 mt-4 rounded hover:bg-green-700 cursor-pointer"
+            onClick={() => navigate('/instructor/sessions')}>Add New Session</button>
+        </div>
       ) : (
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {sessions.map((session) => (
@@ -46,6 +106,8 @@ export default function CourseSessions() {
               key={session.id}
               session={session}
               isInstructor={true}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
             />
           ))}
         </ul>

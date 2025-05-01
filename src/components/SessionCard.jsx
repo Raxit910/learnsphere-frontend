@@ -3,8 +3,9 @@ import ReactPlayer from 'react-player';
 export default function SessionCard({ session, isDone, onComplete, isInstructor, onEdit, onDelete }) {
   return (
     <li
-      className={`w-full bg-white rounded-md shadow-md overflow-hidden transition duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${isDone ? 'opacity-80' : ''
-        }`}
+      className={`w-full bg-white rounded-md shadow-md overflow-hidden transition duration-300 ease-in-out hover:shadow-lg transform hover:-translate-y-1 ${
+        isDone ? 'opacity-80' : ''
+      }`}
     >
       <div>
         <div className="relative h-32 md:h-40 bg-gray-100">
@@ -28,36 +29,31 @@ export default function SessionCard({ session, isDone, onComplete, isInstructor,
             />
           </div>
 
-          <div className="mt-3 flex justify-end">
+          <div className="mt-3 flex justify-between items-center">
             {isInstructor ? (
               <div className="flex items-center">
                 <button
                   onClick={() => onEdit(session.id)}
-                  className="text-blue-600 hover:underline text-balance font-semibold mr-2"
+                  className="text-blue-600 hover:underline text-sm font-semibold mr-2 cursor-pointer"
                 >
                   Edit
                 </button>
-                
                 <button
                   onClick={() => onDelete(session.id)}
-                  className="text-red-600 hover:underline text-balance font-semibold mr-2"
+                  className="text-red-600 hover:underline text-sm font-semibold cursor-pointer"
                 >
                   Delete
                 </button>
               </div>
+            ) : isDone ? (
+              <p className="text-green-600 text-xs font-semibold">✅ Completed</p>
             ) : (
-              <>
-                {isDone ? (
-                  <p className="text-green-600 text-xs font-semibold">✅ Completed</p>
-                ) : (
-                  <button
-                    onClick={onComplete}
-                    className="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
-                  >
-                    Mark Complete
-                  </button>
-                )}
-              </>
+              <button
+                onClick={onComplete}
+                className="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 cursor-pointer"
+              >
+                Mark Complete
+              </button>
             )}
           </div>
         </div>

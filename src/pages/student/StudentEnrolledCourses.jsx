@@ -39,12 +39,14 @@ export default function StudentEnrolledCourses() {
             >
               <div>
                 <h3 className="text-lg font-semibold truncate">{course.title}</h3>
-                <p className="text-xs text-gray-500 mb-2">{course.category}</p>
+                <span className="bg-green-200 text-xs text-gray-600 rounded-full px-2 inline-flex items-center w-fit">
+                  {course.category}
+                </span>
                 <p className="line-clamp-3 text-xs text-gray-700">{course.description}</p>
               </div>
 
               <button
-                className="mt-4 bg-indigo-600 text-white py-1 rounded hover:bg-indigo-700 text-sm"
+                className="mt-4 bg-indigo-600 text-white py-1 rounded hover:bg-indigo-700 text-sm cursor-pointer"
                 onClick={() => navigate(`/student/course/${course.id}`)}
               >
                 View Sessions

@@ -68,14 +68,16 @@ export default function StudentCourses() {
             >
               <div>
                 <h3 className="font-semibold text-lg truncate">{course.title}</h3>
-                <p className="text-gray-500 text-xs mb-2">{course.category}</p>
+                <span className="bg-green-200 text-xs text-gray-600 rounded-full px-2 inline-flex items-center w-fit">
+                  {course.category}
+                </span>
                 <p className="line-clamp-3 text-xs text-gray-700">{course.description}</p>
               </div>
 
               <button
                 className={`mt-4 py-1 text-sm rounded w-full ${isEnrolled
-                    ? 'bg-gray-400 text-white cursor-not-allowed'
-                    : 'bg-green-600 text-white hover:bg-green-700'
+                  ? 'bg-gray-400 text-white cursor-not-allowed'
+                  : 'bg-green-600 text-white hover:bg-green-700 cursor-pointer'
                   }`}
                 onClick={() => !isEnrolled && handleEnroll(course.id)}
                 disabled={isEnrolled}

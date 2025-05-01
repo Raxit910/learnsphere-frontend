@@ -16,7 +16,7 @@ export default function Courses() {
       const res = await axios.get('http://localhost:5000/api/courses/my-courses', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       setCourses(res.data);
     } catch (err) {
       toast.error('Failed to load courses');
@@ -29,19 +29,12 @@ export default function Courses() {
 
   const handleSubmit = async (data, reset) => {
     try {
-      if (editingCourse) {
-        await axios.put(`http://localhost:5000/api/courses/${editingCourse.id}`, data, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        toast.success('Course updated');
-        setEditingCourse(null);
-      } else {
-        await axios.post(`http://localhost:5000/api/courses`, data, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        toast.success('Course created');
-      }
+      await axios.put(`http://localhost:5000/api/courses/${editingCourse.id}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
+      toast.success('Course updated');
+      setEditingCourse(null);
       fetchCourses();
       reset();
     } catch (err) {
@@ -65,20 +58,24 @@ export default function Courses() {
 
   return (
     <DashboardLayout>
-      <h2 className="text-2xl font-bold mb-4">Manage Courses</h2>
+      <h2 className="text-2xl font-bold mb-4">Manage Your Courses</h2>
 
-      <CourseForm
-        key={editingCourse?.id || 'new'}
-        initialData={editingCourse}
-        onSubmit={handleSubmit}
-        onCancel={() => setEditingCourse(null)}
-      />
+      {editingCourse ?
+        <CourseForm
+          key={editingCourse}
+          initialData={editingCourse}
+          onSubmit={handleSubmit}
+          onCancel={() => setEditingCourse(null)}
+        /> : ''
+      }
 
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {courses.map((course) => (
-          <div key={course.id} className="bg-white p-4 shadow border rounded">
+          <div key={course.id} className="bg-white p-4 border rounded shadow text-sm flex flex-col justify-between">
             <h3 className="text-lg font-semibold">{course.title}</h3>
-            <p className="text-sm text-gray-600">{course.category}</p>
+            <span className="bg-green-200 text-xs text-black rounded-full px-2 inline-flex items-center w-fit">
+              {course.category}
+            </span>
             <p className="text-sm mt-1">{course.description}</p>
 
             <div className="flex gap-4 mt-3">
@@ -90,13 +87,13 @@ export default function Courses() {
               </Link>
               <button
                 onClick={() => setEditingCourse(course)}
-                className="text-blue-600 hover:underline"
+                className="text-blue-600 hover:underline cursor-pointer"
               >
                 Edit
               </button>
               <button
                 onClick={() => handleDelete(course.id)}
-                className="text-red-600 hover:underline"
+                className="text-red-600 hover:underline cursor-pointer"
               >
                 Delete
               </button>

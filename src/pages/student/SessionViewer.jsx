@@ -6,7 +6,7 @@ import axios from 'axios';
 // import ReactPlayer from 'react-player';
 import { toast } from 'react-toastify';
 
-export default function CourseViewer() {
+export default function SessionViewer() {
   const { id } = useParams(); // courseId
   const [course, setCourse] = useState(null);
   const [sessions, setSessions] = useState([]);

@@ -9,14 +9,15 @@ import AddSession from '../pages/instructor/AddSession';
 import CourseSessions from '../pages/instructor/CourseSessions';
 import StudentCourses from '../pages/student/Courses';
 import StudentEnrolledCourses from '../pages/student/StudentEnrolledCourses';
-import CourseViewer from '../pages/student/CourseViewer';
+import SessionViewer from '../pages/student/SessionViewer';
 import LandingPage from '../pages/LandingPage';
+import AddCourse from '../pages/instructor/AddCourse';
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path='/LandingPage' element={<LandingPage />} />
-      <Route path="/" element={<Login />} />
+      <Route path='/' element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
       {/* Instructor Protected Routes */}
@@ -34,6 +35,15 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute role="INSTRUCTOR">
             <Courses />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/instructor/add-course"
+        element={
+          <ProtectedRoute role="INSTRUCTOR">
+            <AddCourse />
           </ProtectedRoute>
         }
       />
@@ -87,7 +97,7 @@ export default function AppRoutes() {
         path="/student/course/:id"
         element={
           <ProtectedRoute role="STUDENT">
-            <CourseViewer />
+            <SessionViewer />
           </ProtectedRoute>
         }
       />

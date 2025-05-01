@@ -14,7 +14,7 @@ const sessionSchema = z.object({
   courseId: z.string().min(1, 'Please select a course'),
 });
 
-export default function SessionForm({ onSubmit, courseOptions }) {
+export default function SessionForm({ onSubmit, courseOptions, editingSession, setEditingSession }) {
   const [editorContent, setEditorContent] = useState('');
 
   const {
@@ -23,6 +23,7 @@ export default function SessionForm({ onSubmit, courseOptions }) {
     formState: { errors },
     watch,
     reset,
+    setValue,
   } = useForm({
     resolver: zodResolver(sessionSchema),
     defaultValues: {
@@ -42,33 +43,76 @@ export default function SessionForm({ onSubmit, courseOptions }) {
 
   const videoUrl = watch('videoUrl');
 
+  // Reset form when editingSession changes
+  useEffect(() => {
+    if (editingSession && editor) {
+      // Prefill when editing
+      setValue('title', editingSession.title);
+      setValue('videoUrl', editingSession.videoUrl);
+      setValue('courseId', editingSession.courseId.toString());
+      editor.commands.setContent(editingSession.content);
+      setEditorContent(editingSession.content);
+    } else {
+      // Clear form when not editing
+      reset({
+        title: '',
+        videoUrl: '',
+        courseId: '',
+      });
+      if (editor) {
+        editor.commands.clearContent();
+        setEditorContent('');
+      }
+    }
+  }, [editingSession, editor, setValue, reset]);
+
   const handleFormSubmit = (data) => {
     if (!editorContent || editorContent.trim() === '<p></p>') {
       alert('Content is required');
       return;
     }
-    onSubmit({ ...data, content: editorContent }, reset, editor);
+
+    const finalData = { ...data, content: editorContent };
+
+    if (editingSession) {
+      finalData.id = editingSession.id; // Include ID on edit
+    }
+
+    onSubmit(finalData, () => {
+      // Explicitly reset form after submission
+      reset({
+        title: '',
+        videoUrl: '',
+        courseId: '',
+      });
+      if (editor) {
+        editor.commands.clearContent();
+        setEditorContent('');
+      }
+      setEditingSession(null);
+    }, editor);
   };
 
-  useEffect(() => {
-    if (!editor) return;
-    editor.commands.setContent('');
-  }, [courseOptions]);
+  const handleCancel = () => {
+    // Explicitly reset all form fields
+    reset({
+      title: '',
+      videoUrl: '',
+      courseId: '',
+    });
+    if (editor) {
+      editor.commands.clearContent();
+      setEditorContent('');
+    }
+    setEditingSession(null);
+  };
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="bg-white p-4 rounded shadow mb-6 space-y-4">
-      <input
-        {...register('title')}
-        placeholder="Session Title"
-        className="w-full p-2 border rounded"
-      />
+      <input {...register('title')} placeholder="Session Title" className="w-full p-2 border rounded" />
       {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
 
-      <input
-        {...register('videoUrl')}
-        placeholder="YouTube Video URL"
-        className="w-full p-2 border rounded"
-      />
+      <input {...register('videoUrl')} placeholder="YouTube Video URL" className="w-full p-2 border rounded" />
       {errors.videoUrl && <p className="text-sm text-red-500">{errors.videoUrl.message}</p>}
 
       {ReactPlayer.canPlay(videoUrl) && (
@@ -87,50 +131,19 @@ export default function SessionForm({ onSubmit, courseOptions }) {
 
       <div className="border rounded min-h-[150px] p-2">
         <p>Explanation:</p>
-        {editor && (
-          <div className="flex gap-2 mb-2 text-sm">
-            <button
-              type="button"
-              title="Bold"
-              onClick={() => editor.chain().focus().toggleBold().run()}
-              className={`px-2 py-1 rounded ${editor.isActive('bold') ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-            >
-              <strong>B</strong>
-            </button>
-            <button
-              type="button"
-              title="Italic"
-              onClick={() => editor.chain().focus().toggleItalic().run()}
-              className={`px-2 py-1 rounded ${editor.isActive('italic') ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-            >
-              <em>I</em>
-            </button>
-            <button
-              type="button"
-              title="Underline"
-              onClick={() => editor.chain().focus().toggleUnderline().run()}
-              className={`px-2 py-1 rounded ${editor.isActive('underline') ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-            >
-              <u>U</u>
-            </button>
-            <button
-              type="button"
-              title="Bullet List"
-              onClick={() => editor.chain().focus().toggleBulletList().run()}
-              className={`px-2 py-1 rounded ${editor.isActive('bulletList') ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-            >
-              List
-            </button>
-          </div>
-        )}
-
-
         <EditorContent editor={editor} />
       </div>
 
-      <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        Add Session
-      </button>
+      <div className="flex gap-3">
+        <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer">
+          {editingSession ? 'Update Session' : 'Add Session'}
+        </button>
+        {editingSession && (
+          <button type="button" onClick={handleCancel} className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
+            Cancel Edit
+          </button>
+        )}
+      </div>
     </form>
   );
 }

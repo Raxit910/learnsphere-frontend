@@ -1,61 +1,97 @@
+// LandingPage.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
   return (
-    <div className="font-sans bg-gray-100 text-gray-900">
-      <header className="bg-green-500 text-white py-20 text-center">
-        <div className="max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Welcome to LearnSphere</h1>
-          <p className="text-lg mb-8">Unlock Your Potential Through Collaborative Learning.</p>
-          <p className="text-md leading-relaxed">
-            LearnSphere is a platform designed to foster a vibrant learning community. Connect with fellow learners, share knowledge, and embark on a journey of continuous growth.
-          </p>
-        </div>
-      </header>
-
-      <section className="py-16 text-center">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl font-semibold mb-12">Explore the Possibilities</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold text-green-500 mb-2">Connect and Collaborate</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Join study groups, participate in discussions, and learn from a diverse community of individuals.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold text-green-500 mb-2">Discover New Skills</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Explore a wide range of topics and access resources to expand your knowledge and abilities.
-              </p>
-            </div>
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold text-green-500 mb-2">Share Your Expertise</h3>
-              <p className="text-gray-700 leading-relaxed">
-                Contribute your insights, help others learn, and build your reputation within the community.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-gray-200 py-16 text-center">
-        <div className="max-w-xl mx-auto px-4">
-          <h2 className="text-3xl font-semibold mb-8">Ready to Get Started?</h2>
-          <div className="flex justify-center space-x-4">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md">
+    <div className="font-sans bg-white text-gray-900 min-h-screen flex flex-col">
+      {/* Header */}
+      <header className="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md">
+        <div className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+          <h1 className="text-3xl font-extrabold tracking-tight">LearnSphere</h1>
+          <div className="space-x-3">
+            <button
+              onClick={() => navigate('/login')}
+              className="bg-white text-green-600 hover:bg-gray-100 font-semibold py-2 px-4 rounded-lg shadow-sm transition-all duration-200 text-sm md:text-base"
+            >
               Login
             </button>
-            <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-md">
+            <button
+              onClick={() => navigate('/register')}
+              className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition-all duration-200 text-sm md:text-base"
+            >
               Register
             </button>
           </div>
         </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="flex-1 flex flex-col justify-center items-center text-center px-4 py-20 bg-gradient-to-b from-gray-50 to-white">
+        <h2 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-6">
+          Empower Your Learning Journey
+        </h2>
+        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mb-10">
+          Join a vibrant community of learners. Explore new skills, collaborate with peers, and share your knowledge — all in one place.
+        </p>
+        <div className="space-x-4">
+          <button
+            onClick={() => navigate('/register')}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-200 text-base"
+          >
+            Get Started
+          </button>
+          <button
+            onClick={() => navigate('/login')}
+            className="bg-white text-green-600 border border-green-600 hover:bg-gray-50 font-semibold py-3 px-6 rounded-lg shadow-sm transition duration-200 text-base"
+          >
+            I already have an account
+          </button>
+        </div>
       </section>
 
-      <footer className="bg-gray-800 text-white py-6 text-center">
+      {/* Features Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <h3 className="text-3xl font-bold text-center text-gray-800 mb-12">Why LearnSphere?</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition duration-200">
+              <div className="flex items-center justify-center mb-4">
+                <span className="bg-green-100 text-green-600 p-3 rounded-full text-3xl">🤝</span>
+              </div>
+              <h4 className="text-xl font-semibold text-green-600 mb-2 text-center">Connect & Collaborate</h4>
+              <p className="text-gray-600 text-center">
+                Join study groups, participate in discussions, and grow together with a diverse global community.
+              </p>
+            </div>
+            <div className="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition duration-200">
+              <div className="flex items-center justify-center mb-4">
+                <span className="bg-green-100 text-green-600 p-3 rounded-full text-3xl">🧠</span>
+              </div>
+              <h4 className="text-xl font-semibold text-green-600 mb-2 text-center">Discover New Skills</h4>
+              <p className="text-gray-600 text-center">
+                Access curated courses and hands-on resources to expand your knowledge in any subject area.
+              </p>
+            </div>
+            <div className="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition duration-200">
+              <div className="flex items-center justify-center mb-4">
+                <span className="bg-green-100 text-green-600 p-3 rounded-full text-3xl">🌟</span>
+              </div>
+              <h4 className="text-xl font-semibold text-green-600 mb-2 text-center">Share Your Expertise</h4>
+              <p className="text-gray-600 text-center">
+                Contribute your insights, mentor others, and build your professional reputation as a thought leader.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-400 py-6 text-center text-sm">
         <p>&copy; 2025 LearnSphere. All rights reserved.</p>
       </footer>
     </div>
   );
-};
+}
