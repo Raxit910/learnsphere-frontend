@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import CourseForm from '../../components/CourseForm';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
 export default function InstructorCourses() {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [editingCourse, setEditingCourse] = useState(null);
 
@@ -69,38 +70,53 @@ export default function InstructorCourses() {
         /> : ''
       }
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {courses.map((course) => (
-          <div key={course.id} className="bg-white p-4 border rounded shadow text-sm flex flex-col justify-between">
-            <h3 className="text-lg font-semibold">{course.title}</h3>
-            <span className="bg-green-200 text-xs text-black rounded-full px-2 inline-flex items-center w-fit">
-              {course.category}
-            </span>
-            <p className="text-sm mt-1">{course.description}</p>
-
-            <div className="flex gap-4 mt-3">
-              <Link
-                to={`/instructor/course/${course.id}/sessions`}
-                className="text-indigo-600 hover:underline"
-              >
-                View Sessions
-              </Link>
-              <button
-                onClick={() => setEditingCourse(course)}
-                className="text-blue-600 hover:underline cursor-pointer"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(course.id)}
-                className="text-red-600 hover:underline cursor-pointer"
-              >
-                Delete
-              </button>
-            </div>
+      {courses.length === 0 ? (
+        <div>
+          <p>No courses added yet.</p>
+          <button className="bg-green-600 text-white px-2 mt-4 rounded hover:bg-green-700 cursor-pointer"
+            onClick={() => navigate('/instructor/add-Course')}>Add New Course</button>
+        </div>
+      ) : (
+        <div>
+          <div className="flex justify-end">
+            <button className="bg-green-600 text-white px-2 mb-4 rounded hover:bg-green-700 cursor-pointer"
+              onClick={() => navigate('/instructor/add-Course')}>Add New Course</button>
           </div>
-        ))}
-      </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {courses.map((course) => (
+              <div key={course.id} className="bg-white p-4 border rounded shadow text-sm flex flex-col justify-between">
+                <h3 className="text-lg font-semibold">{course.title}</h3>
+                <span className="bg-green-200 text-xs text-black rounded-full px-2 inline-flex items-center w-fit">
+                  {course.category}
+                </span>
+                <p className="text-sm mt-1">{course.description}</p>
+
+                <div className="flex gap-4 mt-3">
+                  <Link
+                    to={`/instructor/course/${course.id}/sessions`}
+                    className="text-indigo-600 hover:underline"
+                  >
+                    View Sessions
+                  </Link>
+                  <button
+                    onClick={() => setEditingCourse(course)}
+                    className="text-blue-600 hover:underline cursor-pointer"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(course.id)}
+                    className="text-red-600 hover:underline cursor-pointer"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 }
