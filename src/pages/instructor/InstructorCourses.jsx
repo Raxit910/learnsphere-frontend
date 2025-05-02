@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import CourseForm from '../../components/CourseForm';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
-export default function Courses() {
+export default function InstructorCourses() {
   const [courses, setCourses] = useState([]);
   const [editingCourse, setEditingCourse] = useState(null);
 

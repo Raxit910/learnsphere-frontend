@@ -80,7 +80,7 @@ export default function CourseSessions() {
 
   return (
     <DashboardLayout>
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="text-2xl font-bold">
         Sessions for: {course?.title || 'Loading...'}
       </h2>
 
@@ -96,21 +96,29 @@ export default function CourseSessions() {
       {sessions.length === 0 ? (
         <div>
           <p>No sessions added yet.</p>
-          <button className="bg-green-600 text-white px-4 py-2 mt-4 rounded hover:bg-green-700 cursor-pointer"
+          <button className="bg-green-600 text-white px-2 mt-4 rounded hover:bg-green-700 cursor-pointer"
             onClick={() => navigate('/instructor/sessions')}>Add New Session</button>
         </div>
       ) : (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {sessions.map((session) => (
-            <SessionCard
-              key={session.id}
-              session={session}
-              isInstructor={true}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </ul>
+        <div>
+          <div className="flex justify-end">
+            <button className="bg-green-600 text-white px-2 mb-4 rounded hover:bg-green-700 cursor-pointer"
+              onClick={() => navigate('/instructor/sessions')}>Add New Session</button>
+          </div>
+          <div>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {sessions.map((session) => (
+                <SessionCard
+                  key={session.id}
+                  session={session}
+                  isInstructor={true}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </ul>
+          </div>
+        </div>
       )}
     </DashboardLayout>
   );

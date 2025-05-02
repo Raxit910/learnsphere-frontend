@@ -58,7 +58,7 @@ export default function Login() {
         />
         {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
 
-        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 cursor-pointer">
           Login
         </button>
       </form>

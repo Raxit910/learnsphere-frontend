@@ -14,13 +14,13 @@ export default function LandingPage() {
           <div className="space-x-3">
             <button
               onClick={() => navigate('/login')}
-              className="bg-white text-green-600 hover:bg-gray-100 font-semibold py-2 px-4 rounded-lg shadow-sm transition-all duration-200 text-sm md:text-base"
+              className="bg-white text-green-600 hover:bg-gray-100 font-semibold py-2 px-4 rounded-lg shadow-sm transition-all duration-200 text-sm md:text-base cursor-pointer"
             >
               Login
             </button>
             <button
               onClick={() => navigate('/register')}
-              className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition-all duration-200 text-sm md:text-base"
+              className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition-all duration-200 text-sm md:text-base cursor-pointer"
             >
               Register
             </button>
@@ -39,13 +39,13 @@ export default function LandingPage() {
         <div className="space-x-4">
           <button
             onClick={() => navigate('/register')}
-            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-200 text-base"
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-200 text-base cursor-pointer"
           >
             Get Started
           </button>
           <button
             onClick={() => navigate('/login')}
-            className="bg-white text-green-600 border border-green-600 hover:bg-gray-50 font-semibold py-3 px-6 rounded-lg shadow-sm transition duration-200 text-base"
+            className="bg-white text-green-600 border border-green-600 hover:bg-gray-50 font-semibold py-3 px-6 rounded-lg shadow-sm transition duration-200 text-base cursor-pointer"
           >
             I already have an account
           </button>

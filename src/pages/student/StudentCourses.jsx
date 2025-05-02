@@ -47,7 +47,8 @@ export default function StudentCourses() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      toast.success('Enrolled successfully!');
+      toast.success('Enrolled successfully!'); 
+      setEnrolledCourseIds((prev) => [...prev, courseId]);     
     } catch (err) {
       toast.error(err.response?.data?.message || 'Enrollment failed');
     }

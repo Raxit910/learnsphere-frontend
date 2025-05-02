@@ -4,10 +4,10 @@ import Register from '../pages/Register';
 import InstructorDashboard from '../pages/instructor/Dashboard';
 import StudentDashboard from '../pages/student/Dashboard';
 import ProtectedRoute from '../components/ProtectedRoute';
-import Courses from '../pages/instructor/Courses';
+import InstructorCourses from '../pages/instructor/InstructorCourses';
 import AddSession from '../pages/instructor/AddSession';
 import CourseSessions from '../pages/instructor/CourseSessions';
-import StudentCourses from '../pages/student/Courses';
+import StudentCourses from '../pages/student/StudentCourses';
 import StudentEnrolledCourses from '../pages/student/StudentEnrolledCourses';
 import SessionViewer from '../pages/student/SessionViewer';
 import LandingPage from '../pages/LandingPage';
@@ -34,7 +34,7 @@ export default function AppRoutes() {
         path="/instructor/courses"
         element={
           <ProtectedRoute role="INSTRUCTOR">
-            <Courses />
+            <InstructorCourses />
           </ProtectedRoute>
         }
       />

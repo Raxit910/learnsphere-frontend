@@ -26,7 +26,7 @@ export default function Register() {
     try {
       await axios.post('http://localhost:5000/api/auth/register', data);
       toast.success('Registered successfully! Please login.');
-      navigate('/');
+      navigate('/login');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Registration failed');
     }
@@ -59,7 +59,7 @@ export default function Register() {
         </select>
         {errors.role && <p className="text-sm text-red-500">{errors.role.message}</p>}
 
-        <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+        <button className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 cursor-pointer">
           Register
         </button>
       </form>
