@@ -3,9 +3,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import SessionForm from '../../components/SessionForm';
 import DashboardLayout from '../../layouts/DashboardLayout';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddSession() {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
+  const [editingSession, setEditingSession] = useState(null);
 
   const token = JSON.parse(localStorage.getItem('learnsphere-user'))?.token;
 
@@ -24,31 +27,28 @@ export default function AddSession() {
     fetchCourses();
   }, []);
 
-  const handleCreateSession = async (data, reset, editor) => {
+  const handleCreateSession = async (data) => {
     try {
       await axios.post(`http://localhost:5000/api/sessions/${data.courseId}`, data, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      toast.success('Session created');   // ✅ Success toast fired **only after API call succeeds**
+      toast.success('Session created');
+      navigate(`/instructor/course/${data.courseId}/sessions`);
     } catch (err) {
-      toast.error('Failed to create session');   // ❌ Failure toast only for API call failure
-      return;   // ⛔️ Stop further execution
+      toast.error('Failed to create session');
+      console.error(err);
     }
+  };
 
-    // Safe to reset + clear editor AFTER successful API call
-    try {
-      editor?.commands.setContent('');
-      reset();
-    } catch (err) {
-      console.error('Reset/editor clearing failed:', err);
-    }
-
-    return (
-      <DashboardLayout>
-        <h2 className="text-2xl font-bold mb-4">Add New Session</h2>
-        <SessionForm onSubmit={handleCreateSession} courseOptions={courses} />
-      </DashboardLayout>
-    );
-  }
+  return (
+    <DashboardLayout>
+      <h2 className="text-2xl font-bold mb-4">Add New Session</h2>
+      <SessionForm 
+        onSubmit={handleCreateSession} 
+        courseOptions={courses} 
+        editingSession={editingSession}
+        setEditingSession={setEditingSession}
+      />
+    </DashboardLayout>
+  );
 }

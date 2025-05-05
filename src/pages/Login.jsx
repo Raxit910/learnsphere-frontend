@@ -6,7 +6,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'; // Import from the new library
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -18,6 +18,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [googleCredential, setGoogleCredential] = useState(null); // State to store Google credential
   const [showRoleSelection, setShowRoleSelection] = useState(false); // State to control role selection visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -58,7 +59,7 @@ export default function Login() {
           token: googleCredential,
           role: role, // Send the selected role to the backend
         });
-        console.log(res.data);
+        // console.log(res.data);
         login(res.data);
         toast.success('Google login successful!');
 
@@ -79,20 +80,27 @@ export default function Login() {
     <div className="max-w-md mx-auto mt-20 bg-white p-6 shadow rounded">
       <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <input
-          type="email"
-          {...register('email')}
-          placeholder="Email"
-          className="w-full border p-2 rounded"
-        />
+        <div>
+          <input
+            type="email"
+            {...register('email')}
+            placeholder="Email"
+            className="w-full border p-2 rounded"
+          />
+        </div>
         {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
 
-        <input
-          type="password"
-          {...register('password')}
-          placeholder="Password"
-          className="w-full border p-2 rounded"
-        />
+        <div className='relative'>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            {...register('password')}
+            placeholder="Password"
+            className="w-full border p-2 rounded"
+          />
+          <span onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-2 cursor-pointer">
+            {showPassword ? '🙈' : '👁️'}
+          </span>
+        </div>
         {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
 
         <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 cursor-pointer">
@@ -105,15 +113,15 @@ export default function Login() {
           <GoogleLogin
             render={({ onClick }) => (
               <button
-              onClick={onClick}
-              className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 cursor-pointer text-center"
+                onClick={onClick}
+                className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 cursor-pointer text-center"
               >
                 Sign in with Google
               </button>
             )}
             onSuccess={handleGoogleSuccess}
             onError={handleGoogleError}
-            // cookiePolicy="single_host_origin"
+          // cookiePolicy="single_host_origin"
           />
         </GoogleOAuthProvider>
       </div>

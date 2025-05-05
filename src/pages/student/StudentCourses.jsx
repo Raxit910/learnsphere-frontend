@@ -13,8 +13,6 @@ export default function StudentCourses() {
       const res = await axios.get('http://localhost:5000/api/students/courses', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // console.log(res.data);
-
       setCourses(res.data);
     } catch (err) {
       toast.error('Failed to fetch courses');
@@ -26,9 +24,7 @@ export default function StudentCourses() {
       const res = await axios.get('http://localhost:5000/api/students/my-courses', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // console.log(res.data);
 
-      // Extract only the IDs
       const enrolledIds = res.data.map(course => course.id);
       setEnrolledCourseIds(enrolledIds);
     } catch (err) {
@@ -47,8 +43,8 @@ export default function StudentCourses() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      toast.success('Enrolled successfully!'); 
-      setEnrolledCourseIds((prev) => [...prev, courseId]);     
+      toast.success('Enrolled successfully!');
+      setEnrolledCourseIds((prev) => [...prev, courseId]);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Enrollment failed');
     }
@@ -58,9 +54,9 @@ export default function StudentCourses() {
     <DashboardLayout>
       <h2 className="text-2xl font-bold mb-6">Browse Courses</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {courses.map((course) => {
-          const isEnrolled = enrolledCourseIds.includes(course.id); // ✅ Check enrollment here
+          const isEnrolled = enrolledCourseIds.includes(course.id);
 
           return (
             <div

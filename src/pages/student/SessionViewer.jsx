@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import SessionCard from '../../components/SessionCard';
 import axios from 'axios';
-// import ReactPlayer from 'react-player';
 import { toast } from 'react-toastify';
 
 export default function SessionViewer() {
@@ -27,7 +26,6 @@ export default function SessionViewer() {
       const completedRes = await axios.get(`http://localhost:5000/api/progress/completed/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      // console.log(courseRes.data);
 
       setCourse(courseRes.data);
       setSessions(sessionRes.data);

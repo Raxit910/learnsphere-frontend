@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import SessionCard from '../../components/SessionCard';
 import SessionForm from '../../components/SessionForm';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 
 export default function CourseSessions() {
   const { id } = useParams(); // courseId
@@ -80,44 +79,51 @@ export default function CourseSessions() {
 
   return (
     <DashboardLayout>
-      <h2 className="text-2xl font-bold">
+      <h2 className="text-2xl font-bold mb-4">
         Sessions for: {course?.title || 'Loading...'}
       </h2>
 
-      {editingSession ?
+      {editingSession && (
         <SessionForm
           onSubmit={handleFormSubmit}
           courseOptions={course ? [course] : []}
           editingSession={editingSession}
           setEditingSession={setEditingSession}
-        /> : ''
-      }
+        />
+      )}
 
       {sessions.length === 0 ? (
         <div>
           <p>No sessions added yet.</p>
-          <button className="bg-green-600 text-white px-2 mt-4 rounded hover:bg-green-700 cursor-pointer"
-            onClick={() => navigate('/instructor/sessions')}>Add New Session</button>
+          <button
+            className="bg-green-600 text-white px-4 py-2 mt-4 rounded hover:bg-green-700"
+            onClick={() => navigate('/instructor/sessions')}
+          >
+            Add New Session
+          </button>
         </div>
       ) : (
         <div>
-          <div className="flex justify-end">
-            <button className="bg-green-600 text-white px-2 mb-4 rounded hover:bg-green-700 cursor-pointer"
-              onClick={() => navigate('/instructor/sessions')}>Add New Session</button>
+          <div className="flex justify-end mb-4">
+            <button
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              onClick={() => navigate('/instructor/sessions')}
+            >
+              Add New Session
+            </button>
           </div>
-          <div>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {sessions.map((session) => (
-                <SessionCard
-                  key={session.id}
-                  session={session}
-                  isInstructor={true}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                />
-              ))}
-            </ul>
-          </div>
+
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {sessions.map((session) => (
+              <SessionCard
+                key={session.id}
+                session={session}
+                isInstructor={true}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </ul>
         </div>
       )}
     </DashboardLayout>

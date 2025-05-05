@@ -8,19 +8,20 @@ export default function SessionCard({ session, isDone, onComplete, isInstructor,
       }`}
     >
       <div>
-        <div className="relative h-32 md:h-40 bg-gray-100">
+        {/* Responsive video container */}
+        <div className="relative aspect-video bg-gray-100">
           <ReactPlayer
             url={session.videoUrl}
             controls
             width="100%"
             height="100%"
-            style={{ position: 'absolute', top: 0, left: 0 }}
+            className="absolute top-0 left-0"
           />
         </div>
 
-        <div className="p-4 flex flex-col justify-between h-[calc(100%-32px)] md:h-[calc(100%-40px)]">
-          <div className="mb-auto">
-            <h3 className="font-semibold text-lg text-gray-800 truncate mb-2">
+        <div className="p-4 flex flex-col justify-between">
+          <div className="mb-3">
+            <h3 className="font-semibold text-lg text-gray-800 truncate mb-1 sm:mb-2">
               {session.title}
             </h3>
             <div
@@ -29,12 +30,12 @@ export default function SessionCard({ session, isDone, onComplete, isInstructor,
             />
           </div>
 
-          <div className="mt-3 flex justify-between items-center">
+          <div className="mt-3 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
             {isInstructor ? (
-              <div className="flex items-center">
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => onEdit(session.id)}
-                  className="text-blue-600 hover:underline text-sm font-semibold mr-2 cursor-pointer"
+                  className="text-blue-600 hover:underline text-sm font-semibold cursor-pointer"
                 >
                   Edit
                 </button>
@@ -50,7 +51,7 @@ export default function SessionCard({ session, isDone, onComplete, isInstructor,
             ) : (
               <button
                 onClick={onComplete}
-                className="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 cursor-pointer"
+                className="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               >
                 Mark Complete
               </button>
@@ -61,3 +62,4 @@ export default function SessionCard({ session, isDone, onComplete, isInstructor,
     </li>
   );
 }
+  
