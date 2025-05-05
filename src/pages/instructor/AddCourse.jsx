@@ -3,9 +3,11 @@ import axios from 'axios';
 import CourseForm from "../../components/CourseForm";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function AddCourse() {
 
+  const navigate = useNavigate();
   const token = JSON.parse(localStorage.getItem('learnsphere-user'))?.token;
 
   const handleAddCourse = async (data, reset) => {
@@ -16,6 +18,7 @@ export default function AddCourse() {
       
       toast.success('Course created successfully');
       reset();
+      navigate('/instructor/courses')
     } catch (err) {
       toast.error('Failed to create course');
     }

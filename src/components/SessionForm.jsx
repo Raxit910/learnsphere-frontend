@@ -131,6 +131,34 @@ export default function SessionForm({ onSubmit, courseOptions, editingSession, s
 
       <div className="border rounded min-h-[150px] p-2">
         <p>Explanation:</p>
+        {editor && (
+           <div className="flex gap-2 mb-2 text-sm">
+             <button
+               type="button"
+               title="Bold"
+               onClick={() => editor.chain().focus().toggleBold().run()}
+               className={`px-2 py-1 rounded ${editor.isActive('bold') ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+             >
+               <strong>B</strong>
+             </button>
+             <button
+               type="button"
+               title="Italic"
+               onClick={() => editor.chain().focus().toggleItalic().run()}
+               className={`px-2 py-1 rounded ${editor.isActive('italic') ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+             >
+               <em>I</em>
+             </button>
+             <button
+               type="button"
+               title="Underline"
+               onClick={() => editor.chain().focus().toggleUnderline().run()}
+               className={`px-2 py-1 rounded ${editor.isActive('underline') ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+             >
+               <u>U</u>
+             </button>
+           </div>
+         )}
         <EditorContent editor={editor} />
       </div>
 

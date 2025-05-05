@@ -30,18 +30,25 @@ export default function AddSession() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      toast.success('Session created');
-      reset();
-      editor?.commands.setContent('');
+      toast.success('Session created');   // ✅ Success toast fired **only after API call succeeds**
     } catch (err) {
-      toast.error('Failed to create session');
+      toast.error('Failed to create session');   // ❌ Failure toast only for API call failure
+      return;   // ⛔️ Stop further execution
     }
-  };
 
-  return (
-    <DashboardLayout>
-      <h2 className="text-2xl font-bold mb-4">Add New Session</h2>
-      <SessionForm onSubmit={handleCreateSession} courseOptions={courses} />
-    </DashboardLayout>
-  );
+    // Safe to reset + clear editor AFTER successful API call
+    try {
+      editor?.commands.setContent('');
+      reset();
+    } catch (err) {
+      console.error('Reset/editor clearing failed:', err);
+    }
+
+    return (
+      <DashboardLayout>
+        <h2 className="text-2xl font-bold mb-4">Add New Session</h2>
+        <SessionForm onSubmit={handleCreateSession} courseOptions={courses} />
+      </DashboardLayout>
+    );
+  }
 }

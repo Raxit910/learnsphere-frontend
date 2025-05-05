@@ -3,7 +3,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import InstructorDashboard from '../pages/instructor/Dashboard';
 import StudentDashboard from '../pages/student/Dashboard';
-import ProtectedRoute from '../components/ProtectedRoute';
+import ProtectedRoute from './ProtectedRoute';
 import InstructorCourses from '../pages/instructor/InstructorCourses';
 import AddSession from '../pages/instructor/AddSession';
 import CourseSessions from '../pages/instructor/CourseSessions';
@@ -12,14 +12,30 @@ import StudentEnrolledCourses from '../pages/student/StudentEnrolledCourses';
 import SessionViewer from '../pages/student/SessionViewer';
 import LandingPage from '../pages/LandingPage';
 import AddCourse from '../pages/instructor/AddCourse';
+import NotFoundPage from '../pages/NotFoundPage';
+import PublicRoute from './PublicRoute';
 
 export default function AppRoutes() {
   return (
     <Routes>
       <Route path='/' element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
 
+      <Route path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+
+      <Route path="/register"
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+      />
+      
       {/* Instructor Protected Routes */}
       <Route
         path="/instructor/dashboard"
@@ -101,6 +117,7 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

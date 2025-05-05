@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('learnsphere-user');
     setUser(null);
+    window.location.replace('/login');
   };
 
   return (
