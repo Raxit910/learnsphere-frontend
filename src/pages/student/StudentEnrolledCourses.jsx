@@ -3,6 +3,7 @@ import axios from 'axios';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import StudentCourseReview from '../../components/student/StudentCourseReview';
 
 export default function StudentEnrolledCourses() {
   const [courses, setCourses] = useState([]);
@@ -51,6 +52,9 @@ export default function StudentEnrolledCourses() {
               >
                 View Sessions
               </button>
+
+              {/* ✅ CourseReview component embedded below the button */}
+              <StudentCourseReview courseId={course.id} token={token}/> {/* <-- added review section */}
             </div>
           ))}
         </div>

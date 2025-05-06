@@ -9,7 +9,7 @@ export default function LandingPage() {
       {/* Header */}
       <header className="bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md">
         <div className="max-w-7xl mx-auto px-6 py-4 sm:py-6 flex justify-between items-center">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">LearnSphere</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Learn Sphere</h1>
           <div className="space-x-3 flex items-center">
             <button
               onClick={() => navigate('/login')}

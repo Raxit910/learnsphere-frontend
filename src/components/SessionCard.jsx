@@ -1,3 +1,4 @@
+import { Pencil, Trash2 } from 'lucide-react';
 import ReactPlayer from 'react-player';
 
 export default function SessionCard({ session, isDone, onComplete, isInstructor, onEdit, onDelete }) {
@@ -19,7 +20,7 @@ export default function SessionCard({ session, isDone, onComplete, isInstructor,
           />
         </div>
 
-        <div className="p-4 flex flex-col justify-between">
+        <div className="p-2 flex flex-col justify-between">
           <div className="mb-3">
             <h3 className="font-semibold text-lg text-gray-800 truncate mb-1 sm:mb-2">
               {session.title}
@@ -32,18 +33,18 @@ export default function SessionCard({ session, isDone, onComplete, isInstructor,
 
           <div className="mt-3 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
             {isInstructor ? (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => onEdit(session.id)}
-                  className="text-blue-600 hover:underline text-sm font-semibold cursor-pointer"
+                  className="flex items-center gap-1 text-sm text-blue-600 hover:underline cursor-pointer"
                 >
-                  Edit
+                  <Pencil size={12}/> Edit
                 </button>
                 <button
                   onClick={() => onDelete(session.id)}
-                  className="text-red-600 hover:underline text-sm font-semibold cursor-pointer"
+                  className="flex items-center gap-1 text-sm text-red-600 hover:underline cursor-pointer"
                 >
-                  Delete
+                  <Trash2 size={12} /> Delete
                 </button>
               </div>
             ) : isDone ? (

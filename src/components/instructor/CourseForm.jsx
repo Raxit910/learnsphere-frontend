@@ -57,7 +57,7 @@ export default function CourseForm({ initialData = null, onSubmit, onCancel }) {
       <div className="flex justify-between mt-4">
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+          className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 cursor-pointer"
         >
           {initialData ? 'Update Course' : 'Create Course'}
         </button>

@@ -1,6 +1,6 @@
 import React from "react";
 import axios from 'axios';
-import CourseForm from "../../components/CourseForm";
+import CourseForm from "../../components/instructor/CourseForm";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";

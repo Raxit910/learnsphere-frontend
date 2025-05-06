@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Menu, X } from 'lucide-react';
@@ -6,6 +6,11 @@ import { Menu, X } from 'lucide-react';
 export default function Sidebar() {
   const { user } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
+
+  const linkClasses = ({ isActive }) =>
+    isActive
+      ? 'font-semibold text-blue-700 underline'
+      : 'hover:underline';
 
   return (
     <>
@@ -28,22 +33,22 @@ export default function Sidebar() {
       <aside
         className={`${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 transform transition-transform duration-300 fixed md:static z-50 bg-gray-100 p-4 w-60 min-h-screen`}
+        } md:translate-x-0 transform transition-transform duration-300 fixed md:static z-50 bg-gray-300 p-4 w-60 min-h-screen`}
       >
-        <ul className="space-y-4">
+        <ul className="space-y-3 list-disc list-inside">
           {user?.user?.role === 'INSTRUCTOR' && (
             <>
-              <li><Link to="/instructor/dashboard" className="hover:underline">Dashboard</Link></li>
-              <li><Link to="/instructor/courses" className="hover:underline">View & Manage Your Courses</Link></li>
-              <li><Link to="/instructor/add-course" className="hover:underline">Add New Courses</Link></li>
-              <li><Link to="/instructor/sessions" className="hover:underline">Add Sessions to Your Courses</Link></li>
+              <li><NavLink to="/instructor/dashboard" className={linkClasses}>Dashboard</NavLink></li>
+              <li><NavLink to="/instructor/courses" className={linkClasses}>View & Manage Your Courses</NavLink></li>
+              <li><NavLink to="/instructor/add-course" className={linkClasses}>Add New Courses</NavLink></li>
+              <li><NavLink to="/instructor/sessions" className={linkClasses}>Add Sessions to Your Courses</NavLink></li>
             </>
           )}
           {user?.user?.role === 'STUDENT' && (
             <>
-              <li><Link to="/student/dashboard" className="hover:underline">Dashboard</Link></li>
-              <li><Link to="/student/courses" className="hover:underline">View All Courses</Link></li>
-              <li><Link to="/student/my-courses" className="hover:underline">My Enrolled Courses</Link></li>
+              <li><NavLink to="/student/dashboard" className={linkClasses}>Dashboard</NavLink></li>
+              <li><NavLink to="/student/courses" className={linkClasses}>View All Courses</NavLink></li>
+              <li><NavLink to="/student/my-courses" className={linkClasses}>My Enrolled Courses</NavLink></li>
             </>
           )}
         </ul>

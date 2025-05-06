@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import SessionCard from '../../components/SessionCard';
-import SessionForm from '../../components/SessionForm';
+import SessionForm from '../../components/instructor/SessionForm';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { PlusCircle } from 'lucide-react';
 
 export default function CourseSessions() {
   const { id } = useParams(); // courseId
@@ -96,20 +97,20 @@ export default function CourseSessions() {
         <div>
           <p>No sessions added yet.</p>
           <button
-            className="bg-green-600 text-white px-4 py-2 mt-4 rounded hover:bg-green-700"
+            className="flex items-center bg-green-600 gap-1 text-white px-2 py-1 mt-4 rounded hover:bg-green-700 cursor-pointer"
             onClick={() => navigate('/instructor/sessions')}
           >
-            Add New Session
+            <PlusCircle size={15} /> Add New Session
           </button>
         </div>
       ) : (
         <div>
           <div className="flex justify-end mb-4">
             <button
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              className="flex items-center bg-green-600 gap-1 text-white px-2 py-1 rounded hover:bg-green-700 cursor-pointer"
               onClick={() => navigate('/instructor/sessions')}
             >
-              Add New Session
+              <PlusCircle size={15}/> Add New Session
             </button>
           </div>
 

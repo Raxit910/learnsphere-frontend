@@ -15,13 +15,13 @@ export default function Navbar() {
 
   return (
     <nav className="bg-gray-800 text-white p-4 flex justify-between items-center relative z-50">
-      <h1 className="text-2xl font-bold">LearnSphere</h1>
+      <h1 className="text-2xl font-bold">Learn Sphere</h1>
 
       {/* Desktop Logout */}
       <div className="hidden md:block">
         <button
           onClick={handleLogout}
-          className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded"
+          className="bg-red-600 hover:bg-red-700 px-2 py-1 rounded-2xl cursor-pointer"
         >
           Logout
         </button>

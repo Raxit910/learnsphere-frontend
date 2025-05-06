@@ -35,7 +35,7 @@ export default function AppRoutes() {
           </PublicRoute>
         }
       />
-      
+
       {/* Instructor Protected Routes */}
       <Route
         path="/instructor/dashboard"

@@ -181,7 +181,7 @@ export default function SessionForm({ onSubmit, courseOptions, editingSession, s
       <div className="flex flex-col sm:flex-row gap-3 justify-start">
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200"
+          className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 transition duration-200"
         >
           {editingSession ? 'Update Session' : 'Add Session'}
         </button>
@@ -190,7 +190,7 @@ export default function SessionForm({ onSubmit, courseOptions, editingSession, s
           <button
             type="button"
             onClick={handleCancel}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200"
+            className="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition duration-200"
           >
             Cancel Edit
           </button>
